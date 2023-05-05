@@ -10,15 +10,15 @@ class UsersController < ApplicationController
 
     def login
         @user = User.find_by(username: params[:username])
-        if session[:user_id] 
-            render json: { error: "Already logged in" }, status: :bad_request
-        else
+        if !session[:user_id] 
             if @user && @user.authenticate(params[:password])
                 session[:user_id] = @user.id
                 render json: @user
             else
                 render json: { error: "Invalid username or password" }, status: :unauthorized
             end
+        else
+            render json: { error: "Already logged in" }, status: :bad_request
         end
     end
 
