@@ -1,45 +1,80 @@
 class QuestionsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_error # This is a custom error message
-
+    
     def index
-        @questions = Question.all
-        render json: @questions
+        @user = User.find_by(id: session[:user_id])
+        if @user
+            @questions = Question.all
+            render json: @questions
+        else
+            render json: { error: "Not logged in" }, status: :bad_request
+        end
     end
 
     def create
-        @question = Question.create(question_params)
-        render json: @question
+        @user = User.find_by(id: session[:user_id])
+        if @user
+            @question = Question.new(question_params)
+            if @question.save
+                render json: @question
+            else
+                render json: { error: "Invalid question" }, status: :bad_request
+            end
+        else
+            render json: { error: "Not logged in" }, status: :bad_request
+        end
+      
     end
 
     def show
-        @question = Question.find(params[:id])
-        render json: @question
+        @user = User.find_by(id: session[:user_id])
+        if @user
+            @question = Question.find(params[:id])
+            render json: @question
+        else
+            render json: { error: "Not logged in" }, status: :bad_request
+        end
     end
 
     def update
-        @question = Question.find(params[:id])
-        @question.update(question_params)
-        render json: @question
+        @user = User.find_by(id: session[:user_id])
+        if @user
+            @question = Question.find(params[:id])
+            @question.update(question_params)
+            render json: @question
+        else
+            render json: { error: "Not logged in" }, status: :bad_request
+        end
     end
 
     def destroy
-        @question = Question.find(params[:id])
-        @question.destroy
-        render json: @question
+        @user = User.find_by(id: session[:user_id])
+        if @user
+            @question = Question.find(params[:id])
+            @question.destroy
+            render json: @question
+        else
+            render json: { error: "Not logged in" }, status: :bad_request
+        end
     end
 
     def verify_answer
-        @question = Question.find(params[:id])
-        @option = params.require(:option)
+        @user = User.find_by(id: session[:user_id])
+        if @user
+            @question = Question.find(params[:id])
+            @option = params.require(:option)
 
-        if @option != "a" && @option != "b" && @option != "c" && @option != "d"
-            render json: { error: "Invalid option" }, status: :bad_request
-        else
-            if @question.answer == "option_#{@option}"
-                render json: { correct: true }
+            if @option != "a" && @option != "b" && @option != "c" && @option != "d"
+                render json: { error: "Invalid option" }, status: :bad_request
             else
-                render json: { correct: false }
+                if @question.answer == "option_#{@option}"
+                    render json: { correct: true }
+                else
+                    render json: { correct: false }
+                end
             end
+        else
+            render json: { error: "Not logged in" }, status: :bad_request
         end
     end
 
