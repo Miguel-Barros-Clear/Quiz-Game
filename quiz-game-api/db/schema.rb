@@ -22,12 +22,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_08_130251) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string "content"
-    t.string "option_a"
-    t.string "option_b"
-    t.string "option_c"
-    t.string "option_d"
-    t.string "answer"
+    t.string "content", null: false
+    t.string "option_a", null: false
+    t.string "option_b", null: false
+    t.string "option_c", null: false
+    t.string "option_d", null: false
+    t.string "answer", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
