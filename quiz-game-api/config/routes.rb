@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get '/questions/:id/verify_answer', to: 'questions#verify_answer'
 
+  post '/questions/:id/answer', to: 'answers#create'
+
   post '/signup', to: 'users#create'
   post '/login', to: 'users#login'
   delete '/logout', to: 'users#logout'
