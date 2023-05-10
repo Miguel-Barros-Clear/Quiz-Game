@@ -1,7 +1,5 @@
+import Register from "./register/page";
+
 export default function Home() {
-  return (
-    <main>
-      <h1>Page title</h1>
-    </main>
-  )
+  return <Register />;
 }
