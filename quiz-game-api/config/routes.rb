@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/questions/:id/answer', to: 'answers#create'
 
   post '/signup', to: 'users#create'
+  post '/register', to: 'users#create'
   post '/login', to: 'users#login'
   delete '/logout', to: 'users#logout'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
