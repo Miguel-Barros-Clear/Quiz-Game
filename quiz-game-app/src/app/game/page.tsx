@@ -7,26 +7,84 @@ import Image from 'next/image';
 export default function Game() {
 
   const [gameData, setGameData] = React.useState({
-    questions: [],
-    answers: [],
-    correctAnswer: '',
+    questions: [
+      {
+        question: 'What is the capital of France?',
+        answers: [
+          'New York',
+          'London',
+          'Paris',
+          'Dublin',
+        ],
+        correctAnswer: 'Paris',
+      },
+      {
+        question: 'What is the capital of Spain?',
+        answers: [
+          'New York',
+          'London',
+          'Paris',
+          'Dublin',
+        ],
+        correctAnswer: 'Paris',
+      },
+      {
+        question: 'What is the capital of Germany?',
+        answers: [
+          'New York',
+          'London',
+          'Paris',
+          'Dublin',
+        ],
+        correctAnswer: 'Paris',
+      },
+      {
+        question: 'What is the capital of England?',
+        answers: [
+          'New York',
+          'London',
+          'Paris',
+          'Dublin',
+        ],
+        correctAnswer: 'Paris',
+      },
+    ],
+    timer: 60,
+    currentQuestion: 0,
     score: 0,
     started: false,
   })
 
-  const [timer, setTimer] = React.useState(60)
+  React.useEffect(() => {
+    if (gameData.started) {
+      const interval = setInterval(() => {
+        setGameData({ ...gameData, timer: gameData.timer - 1 })
+      }, 1000)
+      return () => clearInterval(interval)
+    }
+  }, [gameData, gameData.started])
 
   React.useEffect(() => {
-    if (timer > 0) {
-      setTimeout(() => {
-        setTimer(timer - 1)
-      }, 1000)
+    if (gameData.timer === 0) {
+      resetGame()
     }
-    if (timer === 0) {
-      setGameData({ ...gameData, started: false })
-      setTimer(60)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData, gameData.currentQuestion, gameData.timer])
+
+  const verifyAnswer = (answer: string) => {
+    if (answer === gameData.questions[gameData.currentQuestion].correctAnswer) {
+      setGameData({ ...gameData, score: gameData.score + 1, currentQuestion: gameData.currentQuestion + 1 })
+    } else {
+      setGameData({ ...gameData, currentQuestion: gameData.currentQuestion + 1 })
     }
-  }, [timer, gameData.started, gameData])
+    if (gameData.currentQuestion === gameData.questions.length - 1) {
+      resetGame()
+    }
+  }
+
+  const resetGame = () => {
+    setGameData({ ...gameData, score: 0, currentQuestion: 0, started: false, timer: 60 })
+  }
 
   return (
     <main className='w-screen h-screen text-white px-10 py-10 flex flex-col'>
@@ -37,7 +95,7 @@ export default function Game() {
         </span>
         {gameData.started && (
           <span className='w-auto h-full flex items-center'>
-            <p className='font-semibold'>{timer}s</p>
+            <p className='font-semibold'>{gameData.timer}s</p>
             <Icon icon="mdi:clock" className='w-16 h-16 text-[#8663AA] ' />
           </span>
         )}
@@ -54,16 +112,19 @@ export default function Game() {
         )}
         <span className={`game-content flex flex-row w-1/2 h-4/6 bg-white rounded-xl ${(!gameData.started) ? 'blur-sm' : ''} `}>
           <Image className='absolute -mt-10 -ml-10 w-24 h-24' src='/assets/quiz-logo.png' alt='' width={723} height={1024} />
-          <div className='question w-1/2 flex flex-col items-center pt-16'>
-            <p className='question-number w-9/12 text-black text-3xl font-medium mb-5'>Question 1/12</p>
-            <p className='question-description w-9/12 max-h-56 text-black text-lg font-regular text-ellipsis overflow-hidden'>Answer description?</p>
-          </div>
-          <div className='answers w-1/2 flex flex-col justify-evenly py-5 items-center'>
-            <span className='answer w-11/12 h-10 rounded-lg px-2 flex justify-center items-center text-lg text-[#8663AA] border border-[#8663AA] cursor-pointer hover:bg-[#8663AA] hover:border-0 hover:text-white transition-all ease-in-out duration-300'>Answer</span>
-            <span className='answer w-11/12 h-10 rounded-lg px-2 flex justify-center items-center text-lg text-[#8663AA] border border-[#8663AA] cursor-pointer hover:bg-[#8663AA] hover:border-0 hover:text-white transition-all ease-in-out duration-300'>Answer</span>
-            <span className='answer w-11/12 h-10 rounded-lg px-2 flex justify-center items-center text-lg text-[#8663AA] border border-[#8663AA] cursor-pointer hover:bg-[#8663AA] hover:border-0 hover:text-white transition-all ease-in-out duration-300'>Answer</span>
-            <span className='answer w-11/12 h-10 rounded-lg px-2 flex justify-center items-center text-lg text-[#8663AA] border border-[#8663AA] cursor-pointer hover:bg-[#8663AA] hover:border-0 hover:text-white transition-all ease-in-out duration-300'>Answer</span>
-          </div>
+          {gameData.started && (
+            <div className='question w-1/2 flex flex-col items-center pt-16'>
+              <p className='question-number w-9/12 text-black text-3xl font-medium mb-5'>Question {gameData.currentQuestion + 1}/{gameData.questions.length}</p>
+              <p className='question-description w-9/12 max-h-56 text-black text-lg font-regular text-ellipsis overflow-hidden'>{gameData.questions[gameData.currentQuestion].question}</p>
+            </div>
+          )}
+          {gameData.started && (
+            <div className='answers w-1/2 flex flex-col justify-evenly py-5 items-center'>
+              {gameData.questions[gameData.currentQuestion].answers.map((answer, index) => (
+                <span key={index} className='answer w-11/12 h-10 rounded-lg px-2 flex justify-center items-center text-lg text-[#8663AA] border border-[#8663AA] cursor-pointer hover:bg-[#8663AA] hover:border-0 hover:text-white transition-all ease-in-out duration-300' onClick={() => verifyAnswer(answer)}>{answer}</span>
+              ))}
+            </div>
+          )}
         </span>
       </div>
     </main>
