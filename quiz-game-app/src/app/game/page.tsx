@@ -3,6 +3,8 @@
 import React from 'react'
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
+import Navigation from '../components/navigation';
+import Header from '../components/header';
 
 export default function Game() {
 
@@ -92,18 +94,7 @@ export default function Game() {
 
   return (
     <main className='w-screen h-screen text-white px-10 py-10 flex flex-col'>
-      <header className=' w-auto h-auto flex justify-between items-center '>
-        <span className='w-auto h-full flex items-center'>
-          <Icon icon="mdi:logout" className='w-16 h-16 text-[#8663AA] cursor-pointer' />
-          <p className='font-semibold'>Exit</p>
-        </span>
-        {gameData.started && (
-          <span className='w-auto h-full flex items-center'>
-            <p className='font-semibold'>{gameData.timer}s</p>
-            <Icon icon="mdi:clock" className='w-16 h-16 text-[#8663AA] ' />
-          </span>
-        )}
-      </header>
+      <Header gameData={gameData} setGameData={setGameData} />
       <div className='game w-full h-full flex flex-col items-center justify-center '>
         {!gameData.started && (
           <span className='game-start absolute z-10 flex items-center justify-center flex-col' onClick={() => setGameData({ ...gameData, started: true })}>
@@ -131,6 +122,9 @@ export default function Game() {
           )}
         </span>
       </div>
+      {!gameData.started && (
+        <Navigation active={'game'} />
+      )}
     </main>
   )
 }
