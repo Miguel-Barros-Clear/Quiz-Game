@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = 'http://localhost:3000/';
+const API_URL = 'http://localhost:3333/';
 
 export default class ApiController {
   async login(username: string, password: string) {
