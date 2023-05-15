@@ -41,7 +41,7 @@ export default function Ranking() {
       <div className='w-full h-full flex flex-col justify-center items-center'>
         <div className='w-full h-full flex flex-col justify-center items-center'>
           <p className='text-3xl font-semibold mb-5 text-[#8663AA]'>Aqui estão os 5 melhores jogadores</p>
-          <table className='w-7/12 h-full text-center mb-5'>
+          <table className='w-7/12 h-full text-center mb-5 bg-[#333333] rounded-lg'>
             <thead className='h-14 bg-white '>
               <tr className='text-[#222222] text-xl'>
                 <th className='w-1/6 rounded-l-lg'>Position</th>
@@ -51,7 +51,7 @@ export default function Ranking() {
             </thead>
             <tbody className='w-full items-center justify-center'>
               {ranking.players.map((player, index) => (
-                <tr key={index} className='w-full text-white'>
+                <tr key={index} className='w-full text-white hover:bg-[#ffffff40] ease-in-out duration-150 cursor-pointer'>
                   <td className='text-lg'>{player.postion}</td>
                   <td className='text-lg'>{player.name}</td>
                   <td className='text-lg'>{player.score}</td>
