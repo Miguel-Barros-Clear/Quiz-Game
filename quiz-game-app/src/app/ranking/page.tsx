@@ -42,14 +42,14 @@ export default function Ranking() {
         <div className='w-full h-full flex flex-col justify-center items-center'>
           <p className='text-3xl font-semibold mb-5 text-[#8663AA]'>Aqui estão os 5 melhores jogadores</p>
           <table className='w-7/12 h-full text-center mb-5 bg-[#333333] rounded-lg'>
-            <thead className='h-14 bg-white '>
+            <thead className='h-auto bg-white '>
               <tr className='text-[#222222] text-xl'>
                 <th className='w-1/6 rounded-l-lg'>Position</th>
                 <th className='w-1/6'>Name</th>
                 <th className='w-1/6 rounded-r-lg'>Score</th>
               </tr>
             </thead>
-            <tbody className='w-full items-center justify-center'>
+            <tbody className='mt-5 w-full items-center justify-center'>
               {ranking.players.map((player, index) => (
                 <tr key={index} className='w-full text-white hover:bg-[#ffffff40] ease-in-out duration-150 cursor-pointer'>
                   <td className='text-lg'>{player.postion}</td>
