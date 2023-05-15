@@ -49,7 +49,7 @@ export default function Game() {
         correctAnswer: 'Paris',
       },
     ],
-    timer: 60,
+    timer: 30,
     currentQuestion: 0,
     score: 0,
     started: false,
@@ -73,9 +73,13 @@ export default function Game() {
 
   const verifyAnswer = (answer: string) => {
     if (answer === gameData.questions[gameData.currentQuestion].correctAnswer) {
-      setGameData({ ...gameData, score: gameData.score + 1, currentQuestion: gameData.currentQuestion + 1 })
+      setGameData({ ...gameData, score: gameData.score + 5, currentQuestion: gameData.currentQuestion + 1 })
     } else {
-      setGameData({ ...gameData, currentQuestion: gameData.currentQuestion + 1 })
+      setGameData({
+        ...gameData, score: (
+          (gameData.score - 2 < 0) ? 0 : gameData.score - 2
+        ), currentQuestion: gameData.currentQuestion + 1
+      })
     }
     if (gameData.currentQuestion === gameData.questions.length - 1) {
       resetGame()
@@ -83,7 +87,7 @@ export default function Game() {
   }
 
   const resetGame = () => {
-    setGameData({ ...gameData, score: 0, currentQuestion: 0, started: false, timer: 60 })
+    setGameData({ ...gameData, score: 0, currentQuestion: 0, started: false, timer: 30 })
   }
 
   return (
