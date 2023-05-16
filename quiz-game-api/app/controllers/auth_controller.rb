@@ -6,7 +6,7 @@ class AuthController < ApplicationController
     
     if user && user.authenticate(params[:password])
       token = JWT.encode({ user_id: user.id }, '#qu1z-g4m3$-4p1')
-      render json: { token: token }
+      render json: { user: user, session_token: token }
     else
       render json: { error: 'Credenciais inválidas' }, status: :unauthorized
     end
