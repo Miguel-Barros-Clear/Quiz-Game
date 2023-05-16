@@ -84,6 +84,7 @@ GEM
     io-console (0.6.0)
     irb (1.6.4)
       reline (>= 0.3.0)
+    jwt (2.7.0)
     loofah (2.20.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -95,7 +96,6 @@ GEM
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.2)
     minitest (5.18.0)
     msgpack (1.7.0)
     net-imap (0.3.4)
@@ -108,8 +108,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.14.3)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.14.3-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.14.3-x86_64-linux)
       racc (~> 1.4)
@@ -150,8 +149,7 @@ GEM
     rake (13.0.6)
     reline (0.3.3)
       io-console (~> 0.5)
-    sqlite3 (1.6.2)
-      mini_portile2 (~> 2.8.0)
+    sqlite3 (1.6.2-x86_64-darwin)
     sqlite3 (1.6.2-x86_64-linux)
     thor (1.2.1)
     timeout (0.3.2)
@@ -166,13 +164,14 @@ GEM
     zeitwerk (2.6.8)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-20
   x86_64-linux
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   debug
+  jwt
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.3)
@@ -181,7 +180,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 2.7.0p0
+   ruby 3.2.1p31
 
 BUNDLED WITH
    2.4.12
