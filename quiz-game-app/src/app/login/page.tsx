@@ -3,10 +3,13 @@
 import React, { useState } from 'react';
 import Image from 'next/image'
 import Link from 'next/link';
+import { useAuth } from '@/hooks/auth';
 
 import ApiController from '@/controllers/apiController';
 
 export default function Login() {
+
+  const { user, token }: any = useAuth();
 
   const [userData, setUserData]: any = useState({
     username: '',
