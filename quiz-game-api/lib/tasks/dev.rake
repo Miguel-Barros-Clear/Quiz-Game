@@ -20,7 +20,7 @@ namespace :dev do
     desc 'Generate a default user'
     task generate_user: :environment do
         create_spinner("Generating default user") do
-            User.create(username: "admin", email: "user@admin.com", password: "admin")
+            User.create(username: "admin", email: "user@admin.com", password: "admin", score: 0)
         end
     end
 
